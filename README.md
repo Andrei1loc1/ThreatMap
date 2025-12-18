@@ -1,4 +1,4 @@
-# ThreatMap
+# ThreatMap - Aplicatie de vizualizare a atacurilor cibernetice
 ### Student: Chindris Andrei
 
 ## Descriere
