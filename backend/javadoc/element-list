@@ -1,0 +1,7 @@
+com.proiect
+com.proiect.controller
+com.proiect.model
+com.proiect.service.detection
+com.proiect.service.parsing
+com.proiect.service.storage
+com.proiect.service.utils

@@ -1,0 +1,15 @@
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\controller\AttackController.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\controller\IpDetectionController.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\MainApplication.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\model\AttackEvent.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\model\GeoLocation.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\model\IpData.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\model\LogEntry.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\detection\AIPredictionAttack.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\detection\AttackDetector.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\detection\IpAnalysisService.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\parsing\LogParser.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\storage\AttackStorage.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\utils\ApiClient.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\utils\CacheManager.java
+C:\Users\chind\Desktop\ThreatMap\backend\src\main\java\com\proiect\service\utils\LocalDateTimeAdapter.java

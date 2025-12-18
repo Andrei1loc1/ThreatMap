@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+b8f97234c944574a2ec7c781a3b2d19e6c5162f3 refs/remotes/origin/dependabot/npm_and_yarn/electron-30.0.1
+190492b3f2406ece08a4d25dbebd8b7ae5b16b5d refs/remotes/origin/main
+29d5fa95a8b1146888bccab3c75ea57c8f9e7c77 refs/tags/v0.9.9
+0558371af68b1ed432c3269d919b971f1403e736 refs/tags/v1.0.0
+8fd0e00046d837e9486751853d179fe500f5cabb refs/tags/v2.1.0

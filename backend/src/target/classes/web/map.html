@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ThreatMap</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; background: #0e1628; overflow: hidden; }
+    .leaflet-container { background: #0e1628; }
+    /* Reduce seams and artifacts in JavaFX WebView */
+    .leaflet-container,
+    .leaflet-pane,
+    .leaflet-tile,
+    .leaflet-marker-icon,
+    .leaflet-marker-shadow,
+    .leaflet-tile-container,
+    .leaflet-overlay-pane,
+    .leaflet-popup-pane { transform: translateZ(0); -webkit-transform: translateZ(0); }
+    .leaflet-tile { border: 0; outline: 1px solid rgba(0,0,0,0.001); }
+    .leaflet-container img { image-rendering: auto; }
+    /* Pulsing marker */
+    .pulse {
+      width: 14px; height: 14px; border-radius: 50%; position: relative;
+      background: radial-gradient(circle at 30% 30%, #ff6a64, #ff3b3b 60%, #ff3b3b 100%);
+      box-shadow: 0 0 10px rgba(255,106,100,0.9), 0 0 18px rgba(61,213,213,0.6);
+    }
+    .pulse:after {
+      content: ""; position: absolute; left: -6px; top: -6px; right: -6px; bottom: -6px;
+      border-radius: 50%; border: 2px solid rgba(61,213,213,0.9);
+      animation: pulse 1.8s ease-out infinite; box-shadow: 0 0 10px rgba(61,213,213,0.6);
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.5); opacity: 0.9; }
+      70% { transform: scale(1.3); opacity: 0.15; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    .leaflet-popup-content-wrapper { background: rgba(20,26,42,0.92); color: #e8fbff; }
+    .leaflet-popup-tip { background: rgba(20,26,42,0.92); }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // Workaround WebView subpixel seams: prefer 2D transforms
+    try { L.Browser.any3d = false; } catch (e) {}
+    const map = L.map('map', {
+      worldCopyJump: true,
+      zoomControl: true,
+      minZoom: 2,
+      preferCanvas: true,
+      zoomAnimation: false,
+      fadeAnimation: false,
+      markerZoomAnimation: false,
+      maxBoundsViscosity: 0.7
+    });
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd',
+      maxZoom: 19,
+      detectRetina: true,
+      crossOrigin: true,
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    }).addTo(map);
+    map.setView([20, 0], 2);
+
+    const markers = L.layerGroup().addTo(map);
+
+    window.addAttackMarker = function(lat, lon, label) {
+      try {
+        const icon = L.divIcon({ className: 'pulse', iconSize: [14,14], iconAnchor: [7,7] });
+        const m = L.marker([lat, lon], { icon }).addTo(markers);
+        if (label) m.bindPopup('<b>' + ('' + label).replace(/</g,'&lt;') + '</b>');
+        // Add a subtle colored circle for realism
+        L.circle([lat, lon], { radius: 200000, color: '#3dd5d5', weight: 1, opacity: 0.7, fillColor: '#3dd5d5', fillOpacity: 0.08 }).addTo(markers);
+      } catch (e) { /* ignore */ }
+    }
+  </script>
+</body>
+</html>
