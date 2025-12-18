@@ -1,29 +1,25 @@
-# Titlu proiect
-### Student(i)
+# ThreatMap
+### Student: Chindris Andrei
 
 ## Descriere
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+Aplicație desktop pentru vizualizarea și analiza amenințărilor cibernetice pe bază de IP, cu backend Java și frontend React.
 
 ## Obiective
-Lorem ipsum
-
-* ob1
-* ob2
-* ob3
-    - sob31
-    - sob32
-    - ...
-* ....
+* Backend Java pentru procesare log-uri și detectare atacuri.
+* Frontend cu hartă 3D interactivă.
+* Integrare AI pentru evaluare riscuri.
+* Interfață modernă cu statistici în timp real.
 
 ## Arhitectura
-Lorem ipsum ...
+Împărțit în backend (Java/Spring Boot) și frontend (Electron/React).
 
-![Alt text](documentatie-ghid-utlizare-raport/diagrama-clase.png)
 
-Lorem ipsum ...
+Flux: Log-uri → Backend → Analiză → Frontend → Hartă 3D.
 
 ## Functionalitati/Exemple utilizare
-Lorem ipsum
+- Hartă 3D pentru vizualizare atacuri.
+- Detectare automată brute-force/DDoS.
+- Geolocație IP și integrare AI.
+- Dashboard cu statistici și setări.
 
-### Resurse
-Markdown Guide, [Online] Available: https://www.markdownguide.org/basic-syntax/ [accesed: Mar 14, 1706]
+Exemplu: Încarcă log, vezi atacuri pe hartă.
