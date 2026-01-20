@@ -13,9 +13,6 @@ Aplicație desktop pentru vizualizarea și analiza amenințărilor cibernetice p
 ## Arhitectura
 Împărțit în backend (Java/Spring Boot) și frontend (Electron/React).
 
-
-
-
 Flux: Log-uri → Backend → Analiză → Frontend → Hartă 3D.
 
 ## Functionalitati/Exemple utilizare
