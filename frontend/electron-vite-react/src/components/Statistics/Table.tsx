@@ -2,7 +2,7 @@ import React from 'react';
 import { useIpDetection } from '../../context/IpDetectionContext';
 
 const Table: React.FC = () => {
-    const { ipDataList, loading, error } = useIpDetection();
+    const { ipDataList, loading, error, fetchLogIps } = useIpDetection();
 
     if (loading) {
         return <div className="text-center text-gray-400">Loading IP data...</div>;
@@ -17,10 +17,10 @@ const Table: React.FC = () => {
     }
 
     return (
-        <div className="overflow-x-auto rounded-2xl border-2 border-cyan-400 shadow-[0_0_12px_#22d3ee]">
+        <div className="overflow-x-auto rounded-2xl border-2 table-border-primary" style={{boxShadow: '0 0 12px var(--primary-color)'}}>
             <table className="min-w-full text-white rounded-lg ">
                 <thead>
-                    <tr className="bg-blue-400/10 backdrop-blur-md">
+                    <tr className="table-themed backdrop-blur-md">
                         <th className="px-4 py-2 text-left">IP Address</th>
                         <th className="px-4 py-2 text-left">Country</th>
                         <th className="px-4 py-2 text-left">City</th>
@@ -37,7 +37,7 @@ const Table: React.FC = () => {
                             <td className="px-4 py-2">{ip.city}</td>
                             <td className="px-4 py-2">{ip.isp}</td>
                             <td className="px-4 py-2">{ip.org}</td>
-                            <td className="px-4 py-2">{ip.proxy ? 'Yes' : 'No'}</td>
+                            <td className="px-4 py-2">{ip.isVpn ? 'Yes' : 'No'}</td>
                         </tr>
                     ))}
                 </tbody>

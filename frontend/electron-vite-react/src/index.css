@@ -14,6 +14,8 @@
 :root {
   --color-background: #0e0f11;
   --color-foreground: #f5f5f7;
+  --primary-color: #22d3ee;
+  --secondary-color: #0ea5e9;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -73,19 +75,60 @@ body,
 
 .navbar{
   @apply flex flex-row gap-8 inline-block w-[80%] h-14 bg-black/70 backdrop:blur-md items-center justify-between px-10;
-  @apply rounded-full mt-8 border-2 border-cyan-400 shadow-[0_0_12px_#22d3ee];
+  @apply rounded-full mt-8 border-2;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px var(--primary-color);
 }
 .light-card{
-  @apply flex w-full items-center justify-center rounded-xl border-2 border-cyan-400 shadow-[0_0_12px_#22d3ee];
+  @apply flex w-full items-center justify-center rounded-xl border-2;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px var(--primary-color);
 }
 .light-title{
-  @apply text-cyan-300 drop-shadow-[0_0_6px_rgba(34,211,238,0.9)];
+  color: var(--primary-color);
+  @apply drop-shadow-[0_0_6px_rgba(34,211,238,0.9)];
+}
+.light-title{
+  color: var(--primary-color);
+  @apply drop-shadow-[0_0_6px_rgba(34,211,238,0.9)];
 }
 .light-title::before{
   content: "> ";
-  color: #22d3ee;
+  color: var(--primary-color);
   margin-right: 0.4rem;
   font-weight: 700;
+}
+
+.secondary-text {
+  color: var(--primary-color);
+}
+
+.button-setting {
+  background-color: rgba(6, 182, 212, 0.2);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.3);
+}
+
+.button-setting:hover {
+  border-color: var(--secondary-color);
+}
+
+.table-header {
+  background-color: rgba(6, 182, 212, 0.1);
+}
+
+.table-border {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
+.table-themed {
+  background-color: rgba(6, 182, 212, 0.1);
+}
+
+.table-border-primary {
+  border-color: var(--primary-color);
 }
 
 @keyframes spin {
@@ -102,6 +145,17 @@ body,
   animation: spin 1s linear infinite;
 }
 .dropdown-button {
-    @apply appearance-none bg-black border border-cyan-500/50 text-cyan-300 font-mono text-sm rounded-lg px-5 py-2 pr-10 focus:outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-500/20
-    cursor-pointer transition-all duration-300 hover:border-cyan-400 hover:bg-black backdrop-blur-sm;
+    @apply appearance-none bg-black border font-mono text-sm rounded-lg px-5 py-2 pr-10 focus:outline-none focus:ring-4
+    cursor-pointer transition-all duration-300 hover:bg-black backdrop-blur-sm;
+    border-color: rgba(6, 182, 212, 0.5);
+    color: var(--primary-color);
+}
+
+.dropdown-button:focus {
+    border-color: var(--secondary-color);
+    --tw-ring-color: rgba(6, 182, 212, 0.2);
+}
+
+.dropdown-button:hover {
+    border-color: var(--secondary-color);
 }

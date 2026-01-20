@@ -5,10 +5,12 @@ import { useAiRisk } from '@/hooks/useAiRisk';
 import AIScanRisk from "@/components/Cards/AIScanRisk";
 
 const Statistics = () => {
-  const { fetchLogIps } = useIpDetection();
+  const { fetchLogIps, ipDataList } = useIpDetection();
 
   useEffect(() => {
     fetchLogIps();
+    const intervalId = window.setInterval(fetchLogIps, 10000); // Poll every 10s for real-time
+    return () => window.clearInterval(intervalId);
   }, [fetchLogIps]);
 
   return (

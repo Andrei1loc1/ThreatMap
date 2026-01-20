@@ -50,6 +50,11 @@
             <artifactId>java-dotenv</artifactId>
             <version>5.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.resend</groupId>
+            <artifactId>resend-java</artifactId>
+            <version>2.0.0</version>
+        </dependency>
         <!-- Pentru baze date offline MaxMind (geolocation precisă) -->
         <dependency>
             <groupId>com.maxmind.geoip2</groupId>
@@ -87,6 +92,17 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- JPA pentru lucrul cu baza de date -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
 
@@ -94,7 +110,6 @@
         <!-- Project uses non-standard layout: main/java and main/resources
              Tell Maven where to find sources and resources -->
         <sourceDirectory>main/java</sourceDirectory>
-        <testSourceDirectory>test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>main/resources</directory>

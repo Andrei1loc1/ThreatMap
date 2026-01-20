@@ -46,7 +46,11 @@ export const IpDetectionProvider: React.FC<IpDetectionProviderProps> = ({ childr
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:8080/api/ip-detection/analyze?ip=${ip}`);
+            const response = await fetch(`http://localhost:8080/api/ip-detection/analyze?ip=${ip}`, {
+                headers: {
+                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                },
+            });
             if (response.status === 404) {
                 setError('IP invalid');
                 setIpData(null);
@@ -67,13 +71,18 @@ export const IpDetectionProvider: React.FC<IpDetectionProviderProps> = ({ childr
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/api/ip-detection/log-ips');
+      const response = await fetch('http://localhost:8080/api/ip-detection/log-ips', {
+        headers: {
+          'X-API-KEY': import.meta.env.VITE_API_KEY,
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch log IPs');
       }
       const data: IpData[] = await response.json();
       setIpDataList(data);
     } catch (err) {
+      console.error('Error fetching log IPs:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);

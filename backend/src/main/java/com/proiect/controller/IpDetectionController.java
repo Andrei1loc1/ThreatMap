@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * Controller REST pentru operații de detectare și analiză IP.
+ */
 @RestController
 @RequestMapping("/api/ip-detection")
 @CrossOrigin(origins = "*")
@@ -20,9 +24,10 @@ public class IpDetectionController {
     private AttackController attackController;
 
     /**
-     * Analizeaza IP-ul si returneaza datele.
-     * @param ip adresa IP
-     * @return entitatea de raspuns cu date IP
+     * Analizează IP-ul dat și returnează datele acestuia.
+     *
+     * @param ip adresa IP de analizat
+     * @return entitate de răspuns cu date IP
      */
     @GetMapping("/analyze")
     public ResponseEntity<IpData> analyzeIp(@RequestParam String ip){
@@ -35,16 +40,27 @@ public class IpDetectionController {
      * @return completable future cu entitatea de raspuns
      */
     @GetMapping("/log-ips")
-    public CompletableFuture<ResponseEntity<List<IpData>>> getLogIps() {
-        List<String> ips = attackController.getUniqueIps();
-        List<CompletableFuture<Optional<IpData>>> futures = ips.stream()
-                .map(ip -> ipAnalysisService.analyzeIpAsync(ip))
+    public ResponseEntity<List<IpData>> getLogIps() {
+        List<String> ips = attackController.getUniqueIps().stream().limit(10).toList(); // Limit to 10 IPs for performance
+        System.out.println("getLogIps: Analyzing " + ips.size() + " IPs: " + ips);
+        if (ips.isEmpty()) {
+            System.out.println("getLogIps: No IPs to analyze");
+            return ResponseEntity.ok(List.of());
+        }
+        List<IpData> results = ips.stream()
+                .map(ip -> {
+                    try {
+                        Optional<IpData> data = ipAnalysisService.analyzeIp(ip);
+                        System.out.println("getLogIps: Analyzed IP " + ip + " -> " + (data.isPresent() ? "success" : "failed"));
+                        return data.orElse(null);
+                    } catch (Exception e) {
+                        System.err.println("getLogIps: Error analyzing IP " + ip + ": " + e.getMessage());
+                        return null;
+                    }
+                })
+                .filter(java.util.Objects::nonNull)
                 .collect(Collectors.toList());
-        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenApply(v -> futures.stream()
-                        .map(f -> f.join().orElse(null))
-                        .filter(java.util.Objects::nonNull)
-                        .collect(Collectors.toList()))
-                .thenApply(results -> ResponseEntity.ok(results));
+        System.out.println("getLogIps: Completed analysis, results: " + results.size());
+        return ResponseEntity.ok(results);
     }
 }

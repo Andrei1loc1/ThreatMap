@@ -49,6 +49,13 @@ public class AttackEvent {
         return detectionTime;
     }
     /**
+     * Seteaza timpul de detectie.
+     * @param detectionTime timpul de detectie
+     */
+    public void setDetectionTime(LocalDateTime detectionTime) {
+        this.detectionTime = detectionTime;
+    }
+    /**
      * Returneaza reprezentarea sub forma de sir.
      * @return sirul
      */

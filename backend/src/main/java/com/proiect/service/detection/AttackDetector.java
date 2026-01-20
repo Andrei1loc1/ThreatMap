@@ -30,17 +30,15 @@ public class AttackDetector {
      * @return o lista de evenimente de atac detectate
      */
     public List<AttackEvent> detectAttacks(List<LogEntry> entries) {
-        if (!aiPredictor.isAttack(entries)) {
-            return List.of();
-        }
-
         Map<String, Long> failCountMap = entries.stream()
-                .filter(entry -> "FAILURE".equalsIgnoreCase(entry.getStatus()))
+                .filter(entry -> "FAILURE".equals(entry.getStatus()))
                 .collect(Collectors.groupingBy(LogEntry::getAdresaIP, Collectors.counting()));
 
         List<AttackEvent> detected = new ArrayList<>();
         for (Map.Entry<String, Long> entry : failCountMap.entrySet()) {
-            detected.add(buildEvent(entry.getKey(), entry.getValue().intValue()));
+            if (entry.getValue() >= 4) {  // Minimum 4 failed attempts
+                detected.add(buildEvent(entry.getKey(), entry.getValue().intValue()));
+            }
         }
 
         return detected;

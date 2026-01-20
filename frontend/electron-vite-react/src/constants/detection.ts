@@ -1,1 +1,1 @@
-export const FAILURE_THRESHOLD = 5
+export const FAILURE_THRESHOLD = 4

@@ -24,6 +24,16 @@ public class LogParser {
     private static final DateTimeFormatter LOCAL_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
+     * Parseaza o singura linie intr-o intrare de log, cu tratarea erorilor pentru linii invalide.
+     * @param line linia de parsat
+     * @return intrarea de log
+     * @throws IllegalArgumentException daca linia este invalida (ex: prea putine token-uri sau timestamp neparsabil)
+     */
+    public LogEntry parseLine(String line){
+        return tryParseLine(line).orElseThrow(() -> new IllegalArgumentException("Linie invalida: " + line));
+    }
+
+    /**
      * Parseaza fisierul de log din calea data.
      * @param filePath calea catre fisierul de log
      * @return lista de intrari de log
@@ -65,7 +75,7 @@ public class LogParser {
      */
     private Optional<LogEntry> tryParseLine(String line) {
         try {
-            return Optional.of(parseLine(line));
+            return Optional.of(parseSingleLine(line));
         } catch (IllegalArgumentException ignored) {
             return Optional.empty();
         }
@@ -76,15 +86,26 @@ public class LogParser {
      * @param line linia de parsat
      * @return intrarea de log
      */
-    private LogEntry parseLine(String line) {
-        String[] tokens = line.split(",");
-        if (tokens.length < 3) {
+    private LogEntry parseSingleLine(String line) {
+        String[] parts = line.split("\\s+", 4);
+        if (parts.length < 4) {
             throw new IllegalArgumentException("Linie invalidă: " + line);
         }
 
-        LocalDateTime timestamp = parseTimestamp(tokens[0].trim());
-        String ip = tokens[1].trim();
-        String status = tokens[2].trim().toUpperCase();
+        String timestampStr = parts[0] + " " + parts[1] + " " + parts[2];
+        LocalDateTime timestamp = parseTimestamp(timestampStr);
+
+        String message = parts[3];
+        String ip = "unknown";
+        if (message.contains("from ")) {
+            String[] msgParts = message.split("from ");
+            if (msgParts.length > 1) {
+                ip = msgParts[1].split("\\s+")[0];
+            }
+        }
+
+        String status = message.contains("Failed password") ? "FAILURE" : "SUCCESS";
+
         return new LogEntry(ip, status, timestamp);
     }
 
