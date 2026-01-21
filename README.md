@@ -15,6 +15,52 @@ Aplicație desktop pentru vizualizarea și analiza amenințărilor cibernetice p
 
 Flux: Log-uri → Backend → Analiză → Frontend → Hartă 3D.
 
+## Arhitectura Claselor Java (Diagrama UML Simplificată)
+Reprezentare UML în ASCII a principalelor clase și relații de dependență:
+
+```
++---------------------+       +---------------------+
+| AttackController    |       | LogParser           |
+| (Controller)        | ----> | (Service)           |
+| +getLatestAttacks() |       | +parseLine()         |
+| +processLogMessage()|       | +parseLogFile()     |
++---------------------+       +---------------------+
+           |                           ^
+           | uses                      |
+           v                           |
++---------------------+       +---------------------+
+| AttackDetector      | ----> | IpAnalysisService   |
+| (Service)           |       | (Service)           |
+| +detectAttacks()    |       | +analyzeIp()        |
+| +predictDangerPercent()|   | +analyzeIpAsync()   |
++---------------------+       +---------------------+
+           |                           ^
+           | uses                      |
+           v                           |
++---------------------+       +---------------------+
+| SimulationService   |       | AttackStorage       |
+| (Service)           | ----> | (Service)           |
+| +startSimulation()  |       | +saveEvents()       |
+| +stopSimulation()   |       | +loadEvents()       |
++---------------------+       +---------------------+
+           |                           ^
+           | persists                 |
+           v                           |
++---------------------+       +---------------------+
+| EvenimenteSecuritate|       | AttackEvent         |
+| (Entity)            | ----> | (Model)             |
+| +eventId (PK)       |       | +adresaIP           |
+| +rawLog             |       | +failedAttempts     |
+| +dataEveniment      |       | +location           |
++---------------------+       +---------------------+
+```
+
+- **Relații**:
+  - `AttackController` utilizează `AttackDetector` și `LogParser` pentru procesare.
+  - `AttackDetector` depinde de `IpAnalysisService` pentru geolocație.
+  - `SimulationService` folosește `AttackStorage` pentru persistență.
+  - `AttackStorage` mapează între `EvenimenteSecuritate` (DB) și `AttackEvent` (frontend).
+
 ## Functionalitati/Exemple utilizare
 - **Hartă 3D Interactivă**: Vizualizează atacurile pe o hartă Mapbox 3D, cu markere pentru locații IP detectate.
 - **Detectare Automată a Atacurilor**: Algoritmi pentru brute-force/DDoS bazate pe praguri (minim 4 încercări eșuate per IP).
