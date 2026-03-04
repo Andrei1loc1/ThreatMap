@@ -1,7 +1,13 @@
 com.proiect
+com.proiect.config
 com.proiect.controller
+com.proiect.entity
 com.proiect.model
+com.proiect.repository
+com.proiect.security
+com.proiect.service
 com.proiect.service.detection
 com.proiect.service.parsing
 com.proiect.service.storage
 com.proiect.service.utils
+com.proiect.simulation
